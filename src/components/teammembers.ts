@@ -49,7 +49,7 @@ const data = [
   {
     name: "Amaan Payak",
     img: Amaan,
-    role: "Research Lead",
+    role: "Research Team Lead",
     Linkedin: "https://www.linkedin.com/in/amaanpayak",
     GitHub: "http://github.com/amaaanpayak",
   },
