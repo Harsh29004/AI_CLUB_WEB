@@ -71,7 +71,7 @@ const data = [
   {
     name: "Tiya Patel",
     img: Tiya,
-    role: "Digital Team",
+    role: "Digital Team Head",
     Linkedin: "https://www.linkedin.com/in/tiya-patel-s2220",
     GitHub: "https://github.com/TiyaSPatel",
   },
