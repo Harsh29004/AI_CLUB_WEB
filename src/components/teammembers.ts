@@ -1,6 +1,5 @@
 import Krishna from "@/components/images/KrishnaShethna.JPG";
 import Het from "@/components/images/HetSalmawala.png";
-import Aryan from "@/components/images/AryanChopra.jpg";
 import Amaan from "@/components/images/AmaanPayak.jpg";
 import Harsh from "@/components/images/HarshPanchal.jpg";
 import Kunj from "@/components/images/kunjdesai.jpg";
@@ -43,7 +42,7 @@ const data = [
     name: "Krishna Shethna",
     img: Krishna,
     role: "Technical Lead",
-    Linkedin: "https://www.linkedin.com/in/krishna-shethna-56b6a321b",
+    Linkedin: "https://www.linkedin.com/in/krishna-shethna-864a0131a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     GitHub: "https://github.com/KrishnaShethna",
   },
   {
@@ -52,14 +51,6 @@ const data = [
     role: "Research Team Lead",
     Linkedin: "https://www.linkedin.com/in/amaanpayak",
     GitHub: "http://github.com/amaaanpayak",
-  },
-
-  {
-    name: "Aryan Chopra",
-    img: Aryan,
-    role: "Research Team",
-    Linkedin: "https://www.linkedin.com/in/aryan-chopra-56b6a321b",
-    GitHub: " https://github.com/AryanChopra",
   },
   {
     name: "Harsh Panchal",
