@@ -70,7 +70,7 @@ const data = [
     name: "Khush Barot",
     img: Khush,
     role: "Marketing Lead",
-    Linkedin: "https://www.linkedin.com/in/khush-barot-56b6a321b",
+    Linkedin: "https://www.linkedin.com/in/khush-barot-426a0b374?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     GitHub: "https://github.com/KhushBarot",
   },
 ];
