@@ -6,15 +6,24 @@ import { fetchData } from "../../../db/fetchData";
 import { Models } from "appwrite";
 
 export const getServerSideProps = async () => {
-  const data = await fetchData();
-
-  return {
-    props: {
-      docs: data,
-    },
-  };
+  try {
+    const data = await fetchData();
+    return {
+      props: {
+        docs: data,
+        error: null,
+      },
+    };
+  } catch (error: any) {
+    return {
+      props: {
+        docs: [],
+        error: error?.message ?? "Configuration error. Please set required environment variables.",
+      },
+    };
+  }
 };
-const Index = ({ docs }: { docs: Models.Document[] }) => {
+const Index = ({ docs, error }: { docs: Models.Document[]; error?: string | null }) => {
   const router = useRouter();
 
   const onClick = (id: string) => {
@@ -26,6 +35,11 @@ const Index = ({ docs }: { docs: Models.Document[] }) => {
       <div className="text-2xl font-semibold mx-3 md:mx-6 xl:text-center xl:text-4xl m-4">
         Newsletter
       </div>
+      {error ? (
+        <div className="mx-3 md:mx-6 my-4 rounded-md border border-red-200 bg-red-50 p-3 text-red-800 text-sm">
+          {error}
+        </div>
+      ) : null}
       {docs.length === 0 ? (
         <div className="text-3xl h-96 flex items-center justify-center">
           <p>No Newsletters Yet :/</p>
