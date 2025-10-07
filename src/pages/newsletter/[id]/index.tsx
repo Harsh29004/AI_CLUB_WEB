@@ -16,17 +16,28 @@ export const getStaticProps = async ({
 }) => {
   const id = params.id;
 
-  const data = await database.getDocument(
-    `${process.env.NEXT_PUBLIC_DATABASE_ID!}`,
-    `${process.env.NEXT_PUBLIC_COLLECTION_ID!}`,
-    id
-  );
+  const databaseId = process.env.NEXT_PUBLIC_DATABASE_ID;
+  const collectionId = process.env.NEXT_PUBLIC_COLLECTION_ID;
+  if (!databaseId || !collectionId) {
+    return { notFound: true };
+  }
 
-  return {
-    props: {
-      data: data,
-    },
-  };
+  try {
+    const data = await database.getDocument(
+      databaseId,
+      collectionId,
+      id
+    );
+
+    return {
+      props: {
+        data: data,
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    return { notFound: true };
+  }
 };
 const Post = ({ data }: Models.Document) => {
   const router = useRouter();
