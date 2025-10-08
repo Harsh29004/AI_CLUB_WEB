@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "./Navbar";
-import banner from "@/components/banner.png";
+import banner from "@/components/banner.jpg";
 import Image from "next/image";
 import TeamCard from "./TeamCard";
 import data from "./teammembers";
