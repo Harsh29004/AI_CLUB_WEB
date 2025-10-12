@@ -29,7 +29,7 @@ const data = [
     img: Tanisha,
     role: "Secretary",
     Linkedin: "http://linkedin.com/in/tanisha-agarwal-22a32324b",
-    GitHub: "https://github.com/TanishaAgarwallllll",
+    GitHub: "https://github.com",
   },
   {
     name: "Kunj Desai",
@@ -71,7 +71,7 @@ const data = [
     img: Khush,
     role: "Marketing Lead",
     Linkedin: "https://www.linkedin.com/in/khush-barot-426a0b374?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    GitHub: "https://github.com/KhushBarot",
+    GitHub: "https://github.com",
   },
 ];
 
