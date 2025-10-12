@@ -4,8 +4,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import Image from "next/image";
-import logo from "@/components/logo.png";
-import mobilelogo from "@/components/mobile-logo.png";
+import logo from "@/components/ai-club-logo.svg";
+import mobilelogo from "@/components/ai-club-mobile-logo.svg";
 function Navbar() {
   return (
     <Popover as="nav" className="sticky top-0 z-50 mx-auto flex items-center justify-between border-b px-4 sm:px-6 lg:px-8 py-2 h-16 text-black bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70" aria-label="Primary">
