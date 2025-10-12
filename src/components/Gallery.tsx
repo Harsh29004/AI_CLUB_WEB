@@ -11,7 +11,7 @@ const RandomGallery: React.FC = () => {
     const getRandomImages = (folderPath: string, count: number) => {
       const imageFiles: Array<{ url: string; description: string }> = [];
       while (imageFiles.length < count) {
-        const randomIndex = Math.floor(Math.random() * 14) + 1;
+        const randomIndex = Math.floor(Math.random() * 20) + 1;
         const imageUrl = `${folderPath}/image${randomIndex}.jpg`;
         if (!imageFiles.some((img) => img.url === imageUrl)) {
           imageFiles.push({ url: imageUrl, description: `Event ${randomIndex}` });
