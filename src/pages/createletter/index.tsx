@@ -48,9 +48,10 @@ const CreatePost = () => {
       await createPost(title, summary, content, imgfile);
       // Success - redirect to newsletter page
       router.push("/newsletter");
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error creating post:", err);
-      setError("Failed to create post. Please try again.");
+      const errorMessage = err?.message || "Unknown error occurred";
+      setError(`Failed to create post: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
