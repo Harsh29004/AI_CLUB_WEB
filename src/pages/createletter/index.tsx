@@ -14,9 +14,11 @@ const SunEditor = dynamic(() => import("../../components/Suneditor"), {
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
-  const [content] = useState("");
+  const [content, setContent] = useState("");
   const [imgfile, setImgFile] = useState<File | null>(null);
   const [status, setStatus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
   useEffect(() => {
     if (!localStorage.getItem("admin")) {
@@ -26,9 +28,32 @@ const CreatePost = () => {
     }
   }, [status]);
 
-  function createNewPost(e: any) {
+  async function createNewPost(e: any) {
     e.preventDefault();
-    createPost(title, summary, content, imgfile!);
+    
+    if (!title.trim() || !summary.trim() || !content.trim()) {
+      setError("Please fill in all fields");
+      return;
+    }
+    
+    if (!imgfile) {
+      setError("Please upload a banner image");
+      return;
+    }
+    
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      await createPost(title, summary, content, imgfile);
+      // Success - redirect to newsletter page
+      router.push("/newsletter");
+    } catch (err) {
+      console.error("Error creating post:", err);
+      setError("Failed to create post. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
   const logOut = () => {
     localStorage.removeItem("admin");
@@ -43,6 +68,11 @@ const CreatePost = () => {
       >
         Log out
       </button>
+      {error && (
+        <div className="mx-6 mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+        </div>
+      )}
       <form onSubmit={createNewPost} className="flex flex-col mx-6 mt-4 gap-2">
         <input
           type="title"
@@ -107,13 +137,14 @@ const CreatePost = () => {
           </label>
         </div>
 
-        <SunEditor />
+        <SunEditor onChange={setContent} value={content} />
 
         <button
-          className="mt-2 bg-gray-600 p-2 text-white mb-2"
-          onClick={createNewPost}
+          type="submit"
+          className="mt-2 bg-gray-600 p-2 text-white mb-2 rounded disabled:opacity-50"
+          disabled={isLoading}
         >
-          Create Post
+          {isLoading ? "Creating Post..." : "Create Post"}
         </button>
       </form>
     </div>
