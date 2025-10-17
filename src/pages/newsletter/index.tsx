@@ -3,7 +3,16 @@ import { useRouter } from "next/navigation";
 import { generatePreview } from "../../../db/generatePreview";
 import Image from "next/image";
 import { fetchData } from "../../../db/fetchData";
-import { Models } from "appwrite";
+
+interface Post {
+  id: number;
+  Title: string;
+  Summary: string;
+  content: string;
+  imageName: string;
+  imageBase64: string;
+  $createdAt: string;
+}
 
 export const getServerSideProps = async () => {
   try {
@@ -23,10 +32,11 @@ export const getServerSideProps = async () => {
     };
   }
 };
-const Index = ({ docs, error }: { docs: Models.Document[]; error?: string | null }) => {
+
+const Index = ({ docs, error }: { docs: Post[]; error?: string | null }) => {
   const router = useRouter();
 
-  const onClick = (id: string) => {
+  const onClick = (id: number) => {
     router.push(`/newsletter/${id}`);
   };
 
@@ -49,25 +59,25 @@ const Index = ({ docs, error }: { docs: Models.Document[]; error?: string | null
           return (
             <div
               className="flex m-3 md:m-6 shadow-md gap-2 bg-white rounded-md min-h-[100px] cursor-pointer"
-              onClick={() => onClick(item.$id)}
-              key={item.$id}
+              onClick={() => onClick(item.id)}
+              key={item.id}
             >
               <Image
-                src={generatePreview(item.$id)}
+                src={item.imageBase64}
                 width={300}
                 height={200}
                 placeholder="blur"
                 alt="letter-img"
                 loading="lazy"
-                blurDataURL={generatePreview(item.$id)}
+                blurDataURL={item.imageBase64}
                 className="object-cover w-[100px] h-[100px] md:min-h-[180px] md:w-[200px] md:h-auto "
               />
               <div className="content flex flex-col gap-y-3 gap-x-3">
                 <p className="font-semibold text-sm md:text-xl truncate">
-                  {item.title}
+                  {item.Title}
                 </p>
                 <p className="text-neutral-500 text-xs md:text-sm">
-                  {item.summary}
+                  {item.Summary}
                 </p>
                 <p className="text-xs sm:text-sm">{`${format(
                   new Date(item.$createdAt),

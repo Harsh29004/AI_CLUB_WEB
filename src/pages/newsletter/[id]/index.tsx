@@ -1,7 +1,17 @@
-import { database, storage } from "../../../../db/database";
+import { supabase, POSTS_TABLE } from "../../../../db/supabase";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Models } from "appwrite";
+
+interface Post {
+  id: number;
+  Title: string;
+  Summary: string;
+  content: string;
+  imageName: string;
+  imageBase64: string;
+  $createdAt: string;
+}
+
 export async function getStaticPaths(ctx: Object) {
   return {
     paths: [], //indicates that no page needs be created at build time
@@ -14,20 +24,22 @@ export const getStaticProps = async ({
 }: {
   params: { id: string };
 }) => {
-  const id = params.id;
+  const id = parseInt(params.id);
 
-  const databaseId = process.env.NEXT_PUBLIC_DATABASE_ID;
-  const collectionId = process.env.NEXT_PUBLIC_COLLECTION_ID;
-  if (!databaseId || !collectionId) {
+  if (isNaN(id)) {
     return { notFound: true };
   }
 
   try {
-    const data = await database.getDocument(
-      databaseId,
-      collectionId,
-      id
-    );
+    const { data, error } = await supabase
+      .from(POSTS_TABLE)
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error || !data) {
+      return { notFound: true };
+    }
 
     return {
       props: {
@@ -39,7 +51,8 @@ export const getStaticProps = async ({
     return { notFound: true };
   }
 };
-const Post = ({ data }: Models.Document) => {
+
+const Post = ({ data }: { data: Post }) => {
   const router = useRouter();
   return (
     <div className="mt-4 w-full">
@@ -50,19 +63,16 @@ const Post = ({ data }: Models.Document) => {
         back
       </button>
       <Image
-        src={
-          storage.getFilePreview(process.env.NEXT_PUBLIC_STORAGE_ID!, data.$id!)
-            .href
-        }
+        src={data.imageBase64}
         priority
         width={600}
         height={400}
         className="w-[300px] mx-auto md:mx-auto md:w-auto max-h-[700px] max-w-[800px] object-contain mt-4"
         alt="blog-banner"
       />
-      <p className="text-center text-2xl font-semibold mt-2">{data.title}</p>
+      <p className="text-center text-2xl font-semibold mt-2">{data.Title}</p>
       <p className="text-center text-lg text-neutral-800 mt-2 p-5">
-        {data.summary}
+        {data.Summary}
       </p>
       <div
         className="w-[90%] mx-auto"

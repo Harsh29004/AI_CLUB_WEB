@@ -1,9 +1,14 @@
-import { database } from "./database";
+import { supabase, POSTS_TABLE } from "./supabase";
+
 export async function fetchData() {
-  const databaseId = process.env.NEXT_PUBLIC_DATABASE_ID;
-  const collectionId = process.env.NEXT_PUBLIC_COLLECTION_ID;
-  if (!databaseId) throw new Error("NEXT_PUBLIC_DATABASE_ID is not set");
-  if (!collectionId) throw new Error("NEXT_PUBLIC_COLLECTION_ID is not set");
-  const docs = await database.listDocuments(databaseId, collectionId);
-  return docs.documents;
+  const { data, error } = await supabase
+    .from(POSTS_TABLE)
+    .select('*')
+    .order('$createdAt', { ascending: false });
+
+  if (error) {
+    throw new Error(`Failed to fetch posts: ${error.message}`);
+  }
+
+  return data || [];
 }
